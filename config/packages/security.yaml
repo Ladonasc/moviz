@@ -1,0 +1,38 @@
+security:
+    # https://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+                algorithm: bcrypt
+    providers:
+        db_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            security: false # juste pour les besoin du dev
+            pattern: ^/
+            provider: db_provider
+            anonymous: ~
+            form_login:
+                # the user is redirected here when they need to log in
+                login_path: /login
+                # submit the login form here
+                check_path: /login
+            logout:
+                path: /logout
+                target: /
+
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # https://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # https://symfony.com/doc/current/cookbook/security/form_login_setup.html
