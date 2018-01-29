@@ -3,9 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LanguageRepository")
+ * @ORM\Table(indexes={@ORM\Index(name="search_idx", columns={"label"})})
+ *
+ * @Serializer\ExclusionPolicy("ALL")
  */
 class Language
 {
@@ -13,6 +18,8 @@ class Language
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose
      *
      * @var integer
      */
@@ -23,6 +30,10 @@ class Language
      *
      * @ORM\Column(type="string", length=2)
      *
+     * @Assert\NotBlank()
+     *
+     * @Serializer\Expose
+     *
      * @var string
      */
     private $code;
@@ -30,12 +41,20 @@ class Language
     /**
      * @ORM\Column(type="string", length=50)
      *
+     * @Assert\NotBlank()
+     *
+     * @Serializer\Expose
+     *
      * @var string
      */
     private $label;
 
     /**
      * @ORM\Column(type="boolean")
+     *
+     * @Assert\NotBlank()
+     *
+     * @Serializer\Expose
      *
      * @var boolean
      */

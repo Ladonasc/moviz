@@ -5,12 +5,12 @@ namespace App\Representation;
 use Pagerfanta\Pagerfanta;
 use JMS\Serializer\Annotation\Type;
 
-class Persons extends AbstractRepresentation
+class Languages extends AbstractRepresentation
 {
     /**
-     * @Type("array<App\Entity\Person>")
+     * @Type("array<App\Entity\Language>")
      *
-     * @var App\Entity\Person[]
+     * @var App\Entity\Language[]
      */
     public $data;
 }
