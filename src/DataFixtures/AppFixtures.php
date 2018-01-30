@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\Store;
 use App\Entity\Category;
 use App\Entity\Language;
 use App\Entity\Person;
@@ -22,6 +23,7 @@ class AppFixtures extends Fixture implements ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $this->_loadUsers($manager);
+        $this->_loadStore($manager);
         $this->_loadCategories($manager);
         $this->_loadLanguages($manager);
         $this->_loadPersons($manager);
@@ -41,6 +43,14 @@ class AppFixtures extends Fixture implements ContainerAwareInterface
         $user->setPassword($encoded);
 
         $manager->persist($user);
+    }
+
+    private function _loadStore(ObjectManager $manager)
+    {
+        $store = new Store();
+        $store->setLabel('Testing store');
+
+        $manager->persist($store);
     }
 
     private function _loadCategories(ObjectManager $manager)
