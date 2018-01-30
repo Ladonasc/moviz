@@ -45,7 +45,7 @@ trait Rest
     {
         $errors = $this->get('validator')->validate($entity);
         if (count($errors)) {
-            return $this->_jsonResponse($this->_toJson($errors), Response::HTTP_BAD_REQUEST);
+            return $this->_jsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
 
         return false;
