@@ -110,7 +110,7 @@ class PersonController extends Controller
      */
     public function putAction(Person $person, Request $request)
     {
-        // Just here as a POC, in fact a person will never be updated
+        // Temporarilly disabled, will be used only in admin
         return new Response('', Response::HTTP_METHOD_NOT_ALLOWED);
 
         // --------------------------
@@ -123,7 +123,10 @@ class PersonController extends Controller
             return $errors;
         }
 
-        $person->setLabel($putPerson->getLabel());
+        $person
+            ->setIdentity($putPerson->getIdentity())
+            ->setIsDirector($putPerson->getIsDirector())
+            ->setIsActor($putPerson->getIsActor());
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
@@ -144,7 +147,7 @@ class PersonController extends Controller
      */
     public function deleteAction(Person $person)
     {
-        // Just here as a POC, in fact a person will never be updated
+        // Temporarilly disabled, will be used only in admin
         return new Response('', Response::HTTP_METHOD_NOT_ALLOWED);
 
         // --------------------------
