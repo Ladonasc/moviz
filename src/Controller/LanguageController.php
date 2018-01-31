@@ -126,10 +126,7 @@ class LanguageController extends Controller
             return $errors;
         }
 
-        $language
-            ->setCode($putItem->getCode())
-            ->setLabel($putItem->getLabel())
-            ->setIsActive($putItem->getIsActive());
+        $language->hydrate($putItem);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();

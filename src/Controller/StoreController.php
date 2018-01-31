@@ -115,7 +115,7 @@ class StoreController extends Controller
             return $errors;
         }
 
-        $store->setLabel($putStore->getLabel());
+        $store->hydrate($putStore);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();

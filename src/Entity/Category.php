@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @Serializer\ExclusionPolicy("ALL")
  */
-class Category
+class Category extends AbstractEntity
 {
     /**
      * @ORM\Id

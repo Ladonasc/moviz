@@ -123,10 +123,7 @@ class PersonController extends Controller
             return $errors;
         }
 
-        $person
-            ->setIdentity($putPerson->getIdentity())
-            ->setIsDirector($putPerson->getIsDirector())
-            ->setIsActor($putPerson->getIsActor());
+        $person->hydrate($putPerson);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();

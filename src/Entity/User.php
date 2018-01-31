@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
  */
-class User implements UserInterface, \Serializable
+class User extends AbstractEntity implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id

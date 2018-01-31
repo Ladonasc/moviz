@@ -8,7 +8,7 @@ use \Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
  */
-class Media
+class Media extends AbstractEntity
 {
 
     const TYPE_DVD      = 1;

@@ -122,7 +122,7 @@ class CategoryController extends Controller
             return $errors;
         }
 
-        $category->setLabel($putCategory->getLabel());
+        $category->hydrate($putCategory);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();

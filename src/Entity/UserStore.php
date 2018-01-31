@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="App\Repository\UserStoreRepository")
  */
-class UserStore
+class UserStore extends AbstractEntity
 {
 	const ROLE_OWNER = 1;
 
