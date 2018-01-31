@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StoreRepository")
+ *
+ * @Serializer\ExclusionPolicy("ALL")
  */
 class Store extends AbstractEntity
 {
@@ -14,6 +17,8 @@ class Store extends AbstractEntity
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose
      */
     private $id;
 
@@ -22,6 +27,8 @@ class Store extends AbstractEntity
      *
      * @Assert\Type("string")
      * @Assert\Length(max=100)
+     *
+     * @Serializer\Expose
      */
     private $label;
 
