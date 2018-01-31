@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StoreRepository")
@@ -18,6 +19,9 @@ class Store extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=100)
+     *
+     * @Assert\Type("string")
+     * @Assert\Length(max=100)
      */
     private $label;
 

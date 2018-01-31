@@ -31,6 +31,8 @@ class Language extends AbstractEntity
      * @ORM\Column(type="string", length=2)
      *
      * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @Assert\Length(max=2)
      *
      * @Serializer\Expose
      *
@@ -42,6 +44,8 @@ class Language extends AbstractEntity
      * @ORM\Column(type="string", length=50)
      *
      * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @Assert\Length(max=50)
      *
      * @Serializer\Expose
      *

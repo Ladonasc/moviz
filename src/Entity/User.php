@@ -26,6 +26,7 @@ class User extends AbstractEntity implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
+     * @Assert\Length(max=255)
      */
     private $email;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This entity represent a many-to-many relation with attribute (the role)
@@ -22,12 +23,16 @@ class UserStore extends AbstractEntity
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
+     * @Assert\Type("integer")
+     *
      * @var integer
      */
     private $id;
 
     /**
      * @ORM\Column(type="smallint")
+     *
+     * @Assert\Type("integer")
      *
      * @var integer
      */

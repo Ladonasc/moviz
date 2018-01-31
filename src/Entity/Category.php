@@ -29,6 +29,8 @@ class Category extends AbstractEntity
      * @ORM\Column(type="string", length=100)
      *
      * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @Assert\Length(max = 100)
      *
      * @Serializer\Expose
      *
@@ -38,6 +40,8 @@ class Category extends AbstractEntity
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     *
+     * @Assert\Type("integer")
      *
      * @var integer
      */
