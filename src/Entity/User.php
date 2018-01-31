@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -10,6 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
+ *
+ * @Serializer\ExclusionPolicy("ALL")
  */
 class User extends AbstractEntity implements UserInterface, \Serializable
 {
@@ -17,6 +20,8 @@ class User extends AbstractEntity implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose
      */
     private $id;
 
@@ -27,14 +32,23 @@ class User extends AbstractEntity implements UserInterface, \Serializable
      * @Assert\NotBlank()
      * @Assert\Email()
      * @Assert\Length(max=255)
+     *
+     * @Serializer\Expose
      */
     private $email;
 
     /**
      * Not persisted in DB (there is no Column annotation)
      *
+     * Exposed but since always empty when hydrated from db this property
+     * is never serialized.
+     * Only use during deserialization for create / update process
+     *
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("string")
      */
     private $plainPassword;
 
@@ -45,6 +59,8 @@ class User extends AbstractEntity implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
+     * @Serializer\Expose
      */
     private $role;
 
@@ -61,6 +77,23 @@ class User extends AbstractEntity implements UserInterface, \Serializable
      * Required by UserInterface
      */
     public function getUsername() {
+        return $this->email;
+    }
+
+    /**
+     * Used when hydrating object from a PUT request
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * Used when hydrating object from a PUT request
+     */
+    public function getEmail()
+    {
         return $this->email;
     }
 
@@ -84,6 +117,10 @@ class User extends AbstractEntity implements UserInterface, \Serializable
 
     public function setPassword($password) {
         $this->password = $password;
+
+        // Ensure plain password is reset when crypted password is filled
+        $this->setPlainPassword(null);
+
         return $this;
     }
 

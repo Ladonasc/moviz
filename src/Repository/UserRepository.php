@@ -13,6 +13,21 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function search($email)
+    {
+
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy('u.email', 'asc');
+
+        if (!empty($email)) {
+            $qb->where('u.email LIKE :value')->setParameter('value', $email . '%');
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
     /*
     public function findBySomething($value)
     {
