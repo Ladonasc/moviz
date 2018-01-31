@@ -53,6 +53,7 @@ class Language
      * @ORM\Column(type="boolean")
      *
      * @Assert\Type("boolean")
+     * @Assert\NotNull
      *
      * @Serializer\Expose
      *
