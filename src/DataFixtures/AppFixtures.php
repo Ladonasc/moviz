@@ -59,6 +59,33 @@ class AppFixtures extends Fixture implements ContainerAwareInterface
             ->setStore($store);
 
         $manager->persist($userStore);
+
+        // ----- User
+        $user = new User();
+        $user->setUsername('b@b.fr')
+             ->setRole('ROLE_USER');
+
+        $encoded = $this->container->get("security.password_encoder")
+            ->encodePassword($user, '222222');
+
+        $user->setPassword($encoded);
+
+        $manager->persist($user);
+
+        // ----- Store
+        $store = new Store();
+        $store->setLabel('Playing store');
+
+        $manager->persist($store);
+
+        // ----- UserStore
+        $userStore = new UserStore();
+        $userStore
+            ->setRole(UserStore::ROLE_OWNER)
+            ->setUser($user)
+            ->setStore($store);
+
+        $manager->persist($userStore);
     }
 
     private function _loadCategories(ObjectManager $manager)

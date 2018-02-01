@@ -13,10 +13,15 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function search($email)
+    public function searchWithStore($email)
     {
-
+        // Force the join to avoid multiple select when serializing
+        // the response
         $qb = $this->createQueryBuilder('u')
+            ->leftJoin('u.userStores', 'user_store')
+            ->addSelect('user_store')
+            ->leftJoin('user_store.store', 'store')
+            ->addSelect('store')
             ->orderBy('u.email', 'asc');
 
         if (!empty($email)) {

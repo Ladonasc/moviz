@@ -45,7 +45,7 @@ class StoreController extends Controller
     {
         $repository = $this->getDoctrine()->getManager()->getRepository(Store::class);
 
-        $stores = $repository->findAll();
+        $stores = $repository->findWithUser();
 
         return $this->_jsonResponse($stores);
     }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -76,6 +77,18 @@ class User extends AbstractEntity implements UserInterface, \Serializable
      */
     private $role;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserStore", mappedBy="user")
+     *
+     * @Serializer\Expose
+     */
+    private $userStores;
+
+    public function __construct()
+    {
+        $this->userStores = new ArrayCollection();
+    }
+
     public function getId() {
     	return $this->id;
     }
@@ -143,6 +156,23 @@ class User extends AbstractEntity implements UserInterface, \Serializable
 
     public function getRole() {
         return $this->role;
+    }
+
+    public function addUserStore(UserStore $userStore)
+    {
+        $this->userStores[] = $userStore;
+        return $this;
+    }
+
+    public function removeUserStore(UserStore $userStore)
+    {
+        $this->userStores->removeElement($userStore);
+        return $this;
+    }
+
+    public function getUserStores()
+    {
+        return $this->userStores;
     }
 
     /**

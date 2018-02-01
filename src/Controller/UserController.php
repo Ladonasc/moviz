@@ -54,7 +54,7 @@ class UserController extends Controller
 
         $repository = $this->getDoctrine()->getManager()->getRepository(User::class);
 
-        $users = $repository->search($params->getEmail());
+        $users = $repository->searchWithStore($params->getEmail());
 
         return $this->_jsonResponse($users);
     }

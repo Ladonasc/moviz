@@ -13,6 +13,20 @@ class StoreRepository extends ServiceEntityRepository
         parent::__construct($registry, Store::class);
     }
 
+    public function findWithUser()
+    {
+        // Force the join to avoid multiple select when serializing
+        // the response
+        $qb = $this->createQueryBuilder('s')
+            ->leftJoin('s.userStores', 'user_store')
+            ->addSelect('user_store')
+            ->leftJoin('user_store.user', 'user')
+            ->addSelect('user');
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
     /*
     public function findBySomething($value)
     {
