@@ -12,11 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UserStore extends AbstractEntity
 {
-	const ROLE_OWNER = 1;
+    const ROLE_OWNER = 'ROLE_OWNER';
 
-	const ROLE_CONTRIBUTOR = 2;
+    const ROLE_CONTRIBUTOR = 'ROLE_CONTRIBUTOR';
 
-	const ROLE_READER = 3;
+    const ROLE_READER = 'ROLE_READER';
 
     /**
      * @ORM\Id
@@ -30,31 +30,28 @@ class UserStore extends AbstractEntity
     private $id;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string", length=50)
      *
-     * @Assert\Type("integer")
+     * @Assert\Choice(callback="getAllowedRoles")
      *
      * @var integer
      */
     private $role;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="App\Entity\User")
-	 * @ORM\JoinColumn(nullable=false)
-	 *
-	 * @var User
-	 */
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var User
+     */
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Store")
+     * @ORM\JoinColumn(nullable=false)
      *
+     * @var Store
      */
-    /**
-	 * @ORM\ManyToOne(targetEntity="App\Entity\Store")
-	 * @ORM\JoinColumn(nullable=false)
-	 *
-	 * @var Store
-	 */
     private $store;
 
     /**
@@ -123,5 +120,14 @@ class UserStore extends AbstractEntity
         $this->store = $store;
 
         return $this;
+    }
+
+    public function getAllowedRoles()
+    {
+        return [
+            self::ROLE_READER,
+            self::ROLE_CONTRIBUTOR,
+            self::ROLE_OWNER
+        ];
     }
 }
