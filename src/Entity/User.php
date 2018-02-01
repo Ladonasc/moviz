@@ -17,6 +17,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User extends AbstractEntity implements UserInterface, \Serializable
 {
     /**
+     * @var string
+     */
+    const ROLE_USER = 'ROLE_USER';
+
+    /**
+     * @var string
+     */
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -59,6 +69,8 @@ class User extends AbstractEntity implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
+     * @Assert\Choice(callback="getAllowedRoles")
      *
      * @Serializer\Expose
      */
@@ -172,5 +184,10 @@ class User extends AbstractEntity implements UserInterface, \Serializable
             $this->email,
             $this->password,
         ) = unserialize($serialized);
+    }
+
+    public function getAllowedRoles()
+    {
+        return [self::ROLE_USER, self::ROLE_ADMIN];
     }
 }
